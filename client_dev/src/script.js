@@ -36,36 +36,46 @@ plusButton.addEventListener("click", () => {
 
 //Payment event
 payButton.addEventListener("click", async (e) => {
-  e.preventDefault();
-  errorMessages.replaceChildren();
+  try {
+    e.preventDefault();
+    errorMessages.replaceChildren();
 
-  const formData = new FormData(form, payButton);
-  const userData = getUserData(formData, costOfKeys);
-  const { success, data, error } = userSchema.safeParse(userData);
+    const formData = new FormData(form, payButton);
+    const userData = getUserData(formData, costOfKeys, numberOfKeysInput);
+  
+    const { success, data, error } = userSchema.safeParse(userData);
 
-  if (!success) {
-    if (errorMessages.childNodes.length == 4) {
+    if (!success) {
+      if (errorMessages.childNodes.length == 4) {
+        return;
+      }
+      const arrayOfErrors = JSON.parse(error.message);
+      for (let error of arrayOfErrors) {
+        errorMessages.appendChild(addError(error.message));
+      }
       return;
     }
-    const arrayOfErrors = JSON.parse(error.message);
-    for (let error of arrayOfErrors) {
-      errorMessages.appendChild(addError(error.message));
+
+    const response = await fetch(`${PAYMENTURL}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      errorMessages.appendChild(addError("Connection Error"));
     }
-    return;
+
+    const responseData = await response.json();
+
+    if (!responseData.success) {
+      errorMessages.appendChild(addError(response.message));
+    }
+    
+    document.location.href = responseData.url;
+  } catch (error) {
+    console.log(error);
   }
-
-  const response = await fetch(`${PAYMENTURL}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(userData),
-  });
-
-  if (!response.ok) {
-    errorMessages.appendChild(addError(response.text));
-  }
-
-  const url = await response.json();
-  document.location.href = url.url;
 });
 
 //Increase cost of keys
