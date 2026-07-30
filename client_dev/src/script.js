@@ -1,12 +1,12 @@
-import { PAYMENTURL } from "../utils/constants.js";
-import { userSchema } from "../utils/formValidation.js";
+import { PAYMENTURL } from "./utils/constants.js";
+import { userSchema } from "./utils/formValidation.js";
 import {
   addError,
   changeCostOfAccessKey,
   changeNumberOfKey,
   getCostOfKeys,
   getUserData,
-} from "../utils/funtions.js";
+} from "./utils/funtions.js";
 
 /* HTML elements */
 //UIMS Access Key elements
