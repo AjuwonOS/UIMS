@@ -31,10 +31,10 @@ app.get("/", async (req, res) => {
     }  */
 });
 
-app.get("/api/pay", async (req, res) => {
+app.post("/api/pay", async (req, res) => {
   try {
-    const {firsName, lastName, email, costOfKey, phoneNumber} = req.query;
-    
+    const { firsName, lastName, email, costOfKey, phoneNumber } = req.body;
+
     const response = await fetch(
       "https://api.paystack.co/transaction/initialize",
       {
