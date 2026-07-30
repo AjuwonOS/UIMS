@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch . --env-file=.env"
+    "dev": "node --env-file .env --watch ."
   },
   "keywords": [],
   "author": "",
@@ -13,7 +13,7 @@
   "type": "module",
   "dependencies": {
     "express": "^5.2.1",
-    "sqlite3": "^6.0.1",
+    "pg": "^8.22.0",
     "zod": "^4.4.3"
   }
 }
