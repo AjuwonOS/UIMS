@@ -1,5 +1,5 @@
 import { Router } from "express";
-import paymentRoute from "./paymentRouter.js"
+import paymentRoute from "./paymentRoutes.js"
 
 const router = Router()
 const apiRoutes = [paymentRoute]
