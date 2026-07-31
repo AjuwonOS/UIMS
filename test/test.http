@@ -1,0 +1,11 @@
+POST http://localhost:3000/api/pay
+Content-Type: application/json
+
+{
+    "email":"ajuwon@gmail.com",
+    "firstName":"Oreoluwa",
+    "lastName":"Ajuwon",
+    "phoneNumber":"08166124505",
+    "numberOfKeys":1,
+    "costOfKey":10300
+}

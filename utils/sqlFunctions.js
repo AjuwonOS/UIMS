@@ -1,22 +1,22 @@
-import client from "../connect.js";
+import db from "../connect.js";
 import { sqlQueries } from "./sqlQueries.js";
 
-async function execute(sql, params = []) {
-  const res = await client.query(sql, params);
-  return res.rows[0];
+function execute(sql, params = []) {
+  const res = db.prepare(sql).run(params);
+  return res;
 }
 
-async function fetchAll(sql, params = []) {
-  const res = await client.query(sql, params);
+function fetchAll(sql, params = []) {
+  const res = db.prepare(sql);
   return res.rows;
 }
 
-async function fetchFirst(sql, params = []) {
-  const res = await client.query(sql, params);
+function fetchFirst(sql, params = []) {
+  const res = db.prepare(sql, params);
   return res.rows[0];
 }
 
-export async function insertTransaction(
+export function insertTransaction(
   transactionID,
   email,
   fullName,
@@ -24,7 +24,7 @@ export async function insertTransaction(
   costOfTransaction,
 ) {
   try {
-    const response = await execute(sqlQueries.inserts.transaction, [
+    const response = execute(sqlQueries.inserts.transaction, [
       transactionID,
       email,
       fullName,

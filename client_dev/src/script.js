@@ -63,13 +63,15 @@ payButton.addEventListener("click", async (e) => {
     });
 
     if (!response.ok) {
-      errorMessages.appendChild(addError("Connection Error"));
+      errorMessages.textContent = "Connection Error";
+      return
     }
 
     const responseData = await response.json();
 
     if (!responseData.success) {
-      errorMessages.appendChild(addError(response.message));
+      errorMessages.textContent = responseData.message
+      return
     }
     
     document.location.href = responseData.url;

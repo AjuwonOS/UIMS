@@ -6,12 +6,13 @@ export const transactionTable = `
         numberOfKeys INTEGER NOT NULL,
         costOfTransaction INTEGER NOT NULL,
         isSuccessfull BOOLEAN DEFAULT FALSE,
-        createAt TIMESTAMPTZ DEFAULT LOCALTIMESTAMP
+        createAt TEXT DEFAULT (datetime('now', 'localtime')),
+        paidAt TEXT
     );
 `;
 
 export const sqlQueries = {
   inserts: {
-    transaction: `INSERT INTO transactions(transactionID, email, fullName, numberOfKeys, costOfTransaction) VALUES($1,$2,$3,$4,$5)`,
+    transaction: `INSERT INTO transactions(transactionID, email, fullName, numberOfKeys, costOfTransaction) VALUES(?,?,?,?,?)`,
   },
 };
