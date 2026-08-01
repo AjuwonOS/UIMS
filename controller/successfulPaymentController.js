@@ -36,6 +36,7 @@ export async function successfulPaymentController(req, res) {
     await sendMail(message)
   } catch (error) {
     console.error(error);
+    res.status(500).send("Internal Server Error");
   }
 }
 const con = { transactionID: "or3s02o6rb", costOfTransaction: 10300 };
