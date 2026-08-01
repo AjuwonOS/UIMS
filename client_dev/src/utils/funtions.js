@@ -13,9 +13,10 @@ export function changeNumberOfKey(isMinus, numberOfKeysInput) {
 
 export function changeCostOfAccessKey(costOfKeysText, numberOfKeysInput) {
   const currentNumberOfKeys = parseInt(numberOfKeysInput.value);
+  currentNumberOfKeys > 0 ?
   costOfKeysText.textContent = (
     currentNumberOfKeys * COST_OF_SINGLE_KEY + 300  // 300 Paystack fee
-  ).toLocaleString("en-US");
+  ).toLocaleString("en-US") : costOfKeysText.textContent = (COST_OF_SINGLE_KEY + 300).toLocaleString("en-US")
 }
 
 export function getCostOfKeys(costOfKeysText) {
@@ -34,7 +35,7 @@ export function getUserData(formData, costOfKeys, numberOfKeysInput) {
     lastName: formData.get("lastName"),
     email: formData.get("email"),
     phoneNumber: formData.get("phoneNumber"),
-    numberOfKeys: parseInt(numberOfKeysInput.value),
+    numberOfKeys: parseInt(numberOfKeysInput.value) /* >= 1 ? parseInt(numberOfKeysInput.value) : 10300 */,
     costOfKey: getCostOfKeys(costOfKeys),
   };
 }

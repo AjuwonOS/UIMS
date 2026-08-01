@@ -34,6 +34,14 @@ plusButton.addEventListener("click", () => {
   changeCostOfAccessKey(costOfKeys, numberOfKeysInput);
 });
 
+window.addEventListener("pageshow", () => {
+  changeCostOfAccessKey(costOfKeys, numberOfKeysInput)
+})
+
+numberOfKeysInput.addEventListener("input", () => {
+  console.log("je")
+  changeCostOfAccessKey(costOfKeys, numberOfKeysInput)
+})
 //Payment event
 payButton.addEventListener("click", async (e) => {
   try {
@@ -74,7 +82,7 @@ payButton.addEventListener("click", async (e) => {
       return
     }
     
-    document.location.href = responseData.url;
+    document.location.href = (responseData.url); // replace with document.location.replace(responseData.url) in production
   } catch (error) {
     console.log(error);
   }

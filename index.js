@@ -1,5 +1,6 @@
 import express, { json, static as static_ } from "express";
 import "./connect.js"
+import "./gmailSetup.js"
 import router from "./route/router.js";
 
 const app = express();

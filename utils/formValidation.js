@@ -5,6 +5,9 @@ export const userSchema = z.object({
   lastName: z.string().nonempty("Last name is required"),
   email: z.email(),
   phoneNumber: z.string().length(11, "Phone number must be 11 digits"),
-  numberOfKeys: z.number().nonnegative().nonoptional(),
+  numberOfKeys: z
+    .number().gt(0, "Number of access keys must be greater than zero")
+    .nonnegative("Number of access keys must be greater than zero")
+    .nonoptional(),
   costOfKey: z.number().nonnegative().nonoptional(),
 });
