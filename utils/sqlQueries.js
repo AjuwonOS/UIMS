@@ -27,8 +27,13 @@ export const sqlCode = {
   },
   query: {
     transaction: `SELECT fullName, costOfTransaction, numberOfKeys FROM transactions WHERE transactionID = ?`,
+    key: `SELECT key, numberOfUse, isExpired FROM keys WHERE key = ?`
   },
   update: {
     transaction: `UPDATE transactions SET isSuccessful = 1, paidAt = (datetime('now', 'localtime')) WHERE transactionID = ?`,
+    key: {
+      update: `UPDATE keys SET numberOfUse = numberOfUse + 1 WHERE key = ?`,
+      expire: `UPDATE keys SET isExpired = 1 WHERE key = ?`
+    }
   },
 };

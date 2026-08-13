@@ -6,16 +6,6 @@ function execute(sql, params = []) {
   return res;
 }
 
-function fetchAll(sql, params = []) {
-  const res = db.prepare(sql);
-  return res.rows;
-}
-
-function fetchFirst(sql, params = []) {
-  const res = db.prepare(sql, params);
-  return res.rows[0];
-}
-
 export function insertTransaction(
   transactionID,
   email,
@@ -60,6 +50,31 @@ export function updateTransactionToSuccessful(transactionID) {
 export function insertKey(key, email) {
   try {
     const response = db.prepare(sqlCode.inserts.key).run([key, email])
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export function getKey(key) {
+  try {
+    const response = db.prepare(sqlCode.query.key).get(key);
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}
+export function updateKeyNumberOfUse(key) {
+  try {
+    const response = db.prepare(sqlCode.update.key.update).run(key);
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}
+export function expireKey(key) {
+  try {
+    const response = db.prepare(sqlCode.update.key.expire).run(key);
     return response
   } catch (error) {
     console.log(error)

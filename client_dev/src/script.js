@@ -39,7 +39,6 @@ window.addEventListener("pageshow", () => {
 })
 
 numberOfKeysInput.addEventListener("input", () => {
-  console.log("je")
   changeCostOfAccessKey(costOfKeys, numberOfKeysInput)
 })
 //Payment event
@@ -47,6 +46,7 @@ payButton.addEventListener("click", async (e) => {
   try {
     e.preventDefault();
     errorMessages.replaceChildren();
+    payButton.textContent = "Processing..."
 
     const formData = new FormData(form, payButton);
     const userData = getUserData(formData, costOfKeys, numberOfKeysInput);
@@ -61,6 +61,7 @@ payButton.addEventListener("click", async (e) => {
       for (let error of arrayOfErrors) {
         errorMessages.appendChild(addError(error.message));
       }
+      payButton.textContent = "Pay"; //
       return;
     }
 
@@ -72,6 +73,7 @@ payButton.addEventListener("click", async (e) => {
 
     if (!response.ok) {
       errorMessages.textContent = "Connection Error";
+      payButton.textContent = "Pay"; //
       return
     }
 
@@ -79,10 +81,16 @@ payButton.addEventListener("click", async (e) => {
 
     if (!responseData.success) {
       errorMessages.textContent = responseData.message
+      payButton.textContent = "Pay"; //
       return
     }
     
     document.location.href = (responseData.url); // replace with document.location.replace(responseData.url) in production
+    
+    setTimeout(() => {
+      payButton.textContent = "Pay"
+      form.reset();
+    }, 1000);
   } catch (error) {
     console.log(error);
   }
