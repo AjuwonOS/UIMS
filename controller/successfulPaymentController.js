@@ -18,7 +18,7 @@ export async function successfulPaymentController(req, res) {
         customer: { email },
       },
     } = req.body;
-    
+    console.log("email");
     if (event === "charge.success") res.send(200);
 
     const { costOfTransaction, numberOfKeys, fullName } = queryTransaction(reference);
@@ -34,9 +34,9 @@ export async function successfulPaymentController(req, res) {
     //Send Keys to email
     const message = generateEmailMessage(email, fullName, apiKeys)
     await sendMail(message)
+    
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
 }
-const con = { transactionID: "or3s02o6rb", costOfTransaction: 10300 };

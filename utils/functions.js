@@ -1,6 +1,6 @@
 import crypto, { randomBytes } from "crypto";
 import { insertKey } from "./sqlFunctions.js";
-import { transporter } from "../gmailSetup.js";
+import { createTransporter } from "../gmailSetup.js";
 import { GMAIL, HOW_TO_USE_URL } from "./constants.js";
 
 export async function initiatePayment(email, costOfKey, paymentUrl, apiKey) {
@@ -35,11 +35,16 @@ export function createApiKeysAndInsertInDb(numberOfKeys, email) {
 }
 
 export async function sendMail(message) {
-  try {
+    try {
+        const transporter = await createTransporter();
+        
+    if (!transporter) {
+      console.log("Email service unavailable.");
+    }
     const result = await transporter.sendMail(message);
     return result;
   } catch (error) {
-    return error;
+    console.log("Email not sent. Error:", error);
   }
 }
 
