@@ -4,9 +4,13 @@ import {
   queryTransaction,
   updateTransactionToSuccessful,
 } from "../utils/sqlFunctions.js";
-import { createApiKeysAndInsertInDb, emailTemplate, generateEmailMessage, sendMail } from "../utils/functions.js";
+import {
+  createApiKeysAndInsertInDb,
+  emailTemplate,
+  generateEmailMessage,
+  sendMail,
+} from "../utils/functions.js";
 import { GMAIL } from "../utils/constants.js";
-
 
 export async function successfulPaymentController(req, res) {
   try {
@@ -18,23 +22,23 @@ export async function successfulPaymentController(req, res) {
         customer: { email },
       },
     } = req.body;
-    console.log("email");
+
     if (event === "charge.success") res.send(200);
 
-    const { costOfTransaction, numberOfKeys, fullName } = queryTransaction(reference);
-
-    if (!costOfTransaction) return;
-
-    if (costOfTransaction * 100 !== amount) return;
-
-    updateTransactionToSuccessful(reference);
+    const { costoftransaction, numberofkeys, fullname } = await
+      queryTransaction(reference);
     
-    const apiKeys =  createApiKeysAndInsertInDb(numberOfKeys, email)
+    if (!costoftransaction) return;
     
+    if (costoftransaction * 100 !== amount) return;
+
+    await updateTransactionToSuccessful(reference);
+
+    const apiKeys = await createApiKeysAndInsertInDb(numberofkeys, email);
+
     //Send Keys to email
-    const message = generateEmailMessage(email, fullName, apiKeys)
-    await sendMail(message)
-    
+    const message = await generateEmailMessage(email, fullname, apiKeys);
+    /* await sendMail(message); */
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");

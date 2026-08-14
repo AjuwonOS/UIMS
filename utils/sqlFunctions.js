@@ -1,12 +1,26 @@
 import db from "../connect.js";
 import { sqlCode } from "./sqlQueries.js";
 
-function execute(sql, params = []) {
+/* function await execute(sql, params = []) {
   const res = db.prepare(sql).run(params);
   return res;
+} */
+async function execute(sql, params = []) {
+  const res = await db.query(sql, params);
+  return res.rows[0];
 }
 
-export function insertTransaction(
+async function fetchAll(sql, params = []) {
+  const res = await db.query(sql, params);
+  return res.rows;
+}
+
+async function fetchFirst(sql, params = []) {
+  const res = await db.query(sql, params);
+  return res.rows[0];
+}
+
+export async function insertTransaction(
   transactionID,
   email,
   fullName,
@@ -14,7 +28,7 @@ export function insertTransaction(
   costOfTransaction,
 ) {
   try {
-    const response = execute(sqlCode.inserts.transaction, [
+    const response = await execute(sqlCode.inserts.transaction, [
       transactionID,
       email,
       fullName,
@@ -28,9 +42,10 @@ export function insertTransaction(
 }
 
 
-export function queryTransaction(transactionID) {
+export async function queryTransaction(transactionID) {
   try {
-    const response = db.prepare(sqlCode.query.transaction).get(transactionID)
+    const response = await execute(sqlCode.query.transaction, [transactionID])
+    
     return response;  
   } catch (error) {
     console.log(error)
@@ -38,43 +53,43 @@ export function queryTransaction(transactionID) {
   
 }
 
-export function updateTransactionToSuccessful(transactionID) {
+export async function updateTransactionToSuccessful(transactionID) {
   try {
-    const response = db.prepare(sqlCode.update.transaction).run(transactionID);
+    const response = await execute(sqlCode.update.transaction, [transactionID]);
     return response;
   } catch (error) {
     console.log(error);
   }
 }
 
-export function insertKey(key, email) {
+export async function insertKey(key, email) {
   try {
-    const response = db.prepare(sqlCode.inserts.key).run([key, email])
+    const response = await execute(sqlCode.inserts.key, [key, email])
     return response
   } catch (error) {
     console.log(error)
   }
 }
 
-export function getKey(key) {
+export async function getKey(key) {
   try {
-    const response = db.prepare(sqlCode.query.key).get(key);
+    const response = await execute(sqlCode.query.key, [key]);
     return response
   } catch (error) {
     console.log(error)
   }
 }
-export function updateKeyNumberOfUse(key) {
+export async function updateKeyNumberOfUse(key) {
   try {
-    const response = db.prepare(sqlCode.update.key.update).run(key);
+    const response = await execute(sqlCode.update.key.update, [key]);
     return response
   } catch (error) {
     console.log(error)
   }
 }
-export function expireKey(key) {
+export async function expireKey(key) {
   try {
-    const response = db.prepare(sqlCode.update.key.expire).run(key);
+    const response = await execute(sqlCode.update.key.expire, [key]);
     return response
   } catch (error) {
     console.log(error)

@@ -1,11 +1,11 @@
-/* import { Pool } from "pg";
-import { transactionTable } from "./utils/sqlQueries.js";
+import { Pool } from "pg";
+import { keysTable, transactionTable } from "./utils/sqlQueries.js";
 import { DB_CONNECTION_STRING } from "./utils/constants.js";
 
-const models = [transactionTable];
+const models = [transactionTable, keysTable];
 const client = new Pool({
   connectionString: DB_CONNECTION_STRING,
-  ssl: { rejectUnauthorized: false },
+  ssl: false,
 });
 
 await client.on("error", (err) =>
@@ -15,9 +15,9 @@ await client.connect().then(() => console.log("DB connection successful"));
 
 for (let model of models) await client.query(model);
 
-export default client; */
+export default client;
 
-import Database from "better-sqlite3";
+/*import Database from "better-sqlite3";
 import {DB_NAME} from "./utils/constants.js"
 import { dbTables } from "./utils/sqlQueries.js";
 
@@ -28,3 +28,4 @@ db.exec(dbTables)
 
 
 export default db;
+ */
