@@ -10,6 +10,6 @@ app.use(json());
 app.use(static_("./client"));
 app.use(router);
 
-app.listen(PORT, () => {
+app.listen(PORT,"0.0.0.0", () => {
   console.log(`App is listening on port ${PORT}`);
 });
