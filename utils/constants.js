@@ -12,6 +12,7 @@ export const GOOGLE_REFRESH_TOKEN = process.env.GOOGLE_REFRESH_TOKEN;
 export const REDIRECT_URI = process.env.REDIRECT_URI;
 export const GMAIL = process.env.GMAIL;
 export const HOW_TO_USE_URL = "google.com"
+export const PORT = parseInt(process.env.PORT)
 
 
 const data = {
