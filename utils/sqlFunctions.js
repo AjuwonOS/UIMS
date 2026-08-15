@@ -1,21 +1,7 @@
 import db from "../connect.js";
 import { sqlCode } from "./sqlQueries.js";
 
-/* function await execute(sql, params = []) {
-  const res = db.prepare(sql).run(params);
-  return res;
-} */
 async function execute(sql, params = []) {
-  const res = await db.query(sql, params);
-  return res.rows[0];
-}
-
-async function fetchAll(sql, params = []) {
-  const res = await db.query(sql, params);
-  return res.rows;
-}
-
-async function fetchFirst(sql, params = []) {
   const res = await db.query(sql, params);
   return res.rows[0];
 }
@@ -74,6 +60,7 @@ export async function insertKey(key, email) {
 export async function getKey(key) {
   try {
     const response = await execute(sqlCode.query.key, [key]);
+    console.log(response)
     return response
   } catch (error) {
     console.log(error)
