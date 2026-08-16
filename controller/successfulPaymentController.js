@@ -38,7 +38,7 @@ export async function successfulPaymentController(req, res) {
 
     //Send Keys to email
     const message = await generateEmailMessage(email, fullname, apiKeys);
-    /* await sendMail(message); */
+    await sendMail(message);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
