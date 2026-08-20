@@ -1,7 +1,7 @@
 import crypto, { randomBytes } from "crypto";
 import { insertKey } from "./sqlFunctions.js";
-import { createTransporter } from "../gmailSetup.js";
-import { GMAIL, HOW_TO_USE_URL } from "./constants.js";
+import { EMAIL, HOW_TO_USE_URL, RESEND_API_KEY } from "./constants.js";
+import { resend } from "../mailSetup.js";
 
 export async function initiatePayment(email, costOfKey, paymentUrl, apiKey) {
   const response = await fetch(paymentUrl, {
@@ -34,26 +34,21 @@ export function createApiKeysAndInsertInDb(numberOfKeys, email) {
   return apiKeysArray;
 }
 
-export async function sendMail(message) {
-    try {
-        const transporter = await createTransporter();
-        
-    if (!transporter) {
-      console.log("Email service unavailable.");
+
+export async function resendMail(message) {
+    const {error, data} = resend.emails.send(message);
+    if (error) {
+        console.error(error);
+        return
     }
-    const result = await transporter.sendMail(message);
-    return result;
-  } catch (error) {
-    console.log("Email not sent. Error:", error);
-  }
+    return data
 }
 
 export function generateEmailMessage(email, fullName, apiKeys) {
   return {
-    from: GMAIL,
+    from: `UIMS Key <${EMAIL}>`,
     to: email,
     subject: "UIMS Key Purchase Confirmation",
-    text: "This is the plaintext version of the email.",
     html: emailTemplate(fullName, apiKeys, HOW_TO_USE_URL),
   };
 }
