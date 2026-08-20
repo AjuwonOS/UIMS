@@ -15,7 +15,7 @@ export const keysTable = `
       CREATE TABLE IF NOT EXISTS keystable (
       accesskey VARCHAR(255) PRIMARY KEY,
       email TEXT NOT NULL,
-      numberOfUse INTEGER DEFAULT 0 CHECK (numberOfUse < 4) NOT NULL,
+      numberOfUse INTEGER NOT NULL DEFAULT 0 CHECK (numberOfUse < 4),
       isExpired INTEGER DEFAULT 0 NOT NULL
     );
 `;
