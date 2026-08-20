@@ -24,12 +24,12 @@ export async function initiatePayment(email, costOfKey, paymentUrl, apiKey) {
   return data.data;
 }
 
-export function createApiKeysAndInsertInDb(numberOfKeys, email) {
+export async function createApiKeysAndInsertInDb(numberOfKeys, email) {
   const apiKeysArray = [];
   for (let i = 0; i < numberOfKeys; i++) {
     const apiKey = randomBytes(16).toString("hex");
     apiKeysArray.push(apiKey);
-    insertKey(apiKey, email);
+    await insertKey(apiKey, email);
   }
   return apiKeysArray;
 }

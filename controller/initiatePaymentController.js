@@ -29,7 +29,7 @@ export async function initializePaymentController(req, res) {
       API_KEY,
     );
 
-    const insertResponse = insertTransaction(
+    const insertResponse = await insertTransaction(
       reference,
       email,
       `${lastName} ${firstName}`,

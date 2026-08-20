@@ -1,6 +1,5 @@
 import { randomBytes } from "crypto";
 import {
-  insertKey,
   queryTransaction,
   updateTransactionToSuccessful,
 } from "../utils/sqlFunctions.js";
@@ -39,7 +38,7 @@ export async function successfulPaymentController(req, res) {
 
     //Send Keys to email
     const message = await generateEmailMessage(email, fullname, apiKeys);
-    await resendMail(message);
+    //await resendMail(message);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");

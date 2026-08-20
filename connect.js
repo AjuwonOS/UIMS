@@ -1,4 +1,4 @@
-import { Pool } from "pg";
+/* import { Pool } from "pg";
 import { keysTable, transactionTable } from "./utils/sqlQueries.js";
 import { DB_CONNECTION_STRING } from "./utils/constants.js";
 
@@ -16,4 +16,32 @@ await client.connect().then(() => console.log("DB connection successful"));
 for (let model of models) await client.query(model);
 
 export default client;
+
+ */
+
+import mysql from "mysql2/promise";
+import {
+  MYSQL_DATABASE,
+  MYSQL_HOSTNAME,
+  MYSQL_PASSWORD,
+  MYSQL_USERNAME,
+} from "./utils/constants.js";
+import { keysTable, transactionTable } from "./utils/sqlQueries.js";
+
+const tables = [transactionTable, keysTable];
+const client = mysql.createPool({
+  host: MYSQL_HOSTNAME,
+  user: MYSQL_USERNAME,
+  password: MYSQL_PASSWORD,
+  database: MYSQL_DATABASE,
+})
+
+for (let table of tables) {
+  await client.execute(table);
+}
+
+
+export default client;
+
+
 
