@@ -28,6 +28,7 @@ import {
 } from "./utils/constants.js";
 import { keysTable, transactionTable } from "./utils/sqlQueries.js";
 
+
 const tables = [transactionTable, keysTable];
 const client = mysql.createPool({
   host: MYSQL_HOSTNAME,
@@ -36,9 +37,17 @@ const client = mysql.createPool({
   database: MYSQL_DATABASE,
 })
 
-for (let table of tables) {
-  await client.execute(table);
+
+async function createTablex() {
+  try {
+    for (let table of tables) {
+      await client.execute(table);
+    }
+  } catch (error) {
+    console.log(error)
+  }
 }
+
 
 
 export default client;
