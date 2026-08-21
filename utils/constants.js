@@ -1,3 +1,5 @@
+import { config } from "dotenv";
+config("../.env")
 export const ENVIRONMENT = process.env.ENVIRONMENT;
 export const API_KEY =
   ENVIRONMENT == "development"
