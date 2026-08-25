@@ -8,10 +8,8 @@ router.get("/send_uims",((req, res, next) => {
 
   res.end = function (...args) {
     console.log({
-      method: req.method,
-      url: req.originalUrl,
-      userAgent: req.get("user-agent"),
-      status: res.statusCode
+      contentType: res.get("content-type"),
+      contentLength: res.get("content-length"),
     });
 
     return originalEnd.apply(this, args);
