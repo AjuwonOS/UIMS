@@ -13,10 +13,14 @@ export function changeNumberOfKey(isMinus, numberOfKeysInput) {
 
 export function changeCostOfAccessKey(costOfKeysText, numberOfKeysInput) {
   const currentNumberOfKeys = parseInt(numberOfKeysInput.value);
-  currentNumberOfKeys > 0 ?
-  costOfKeysText.textContent = (
-    currentNumberOfKeys * COST_OF_SINGLE_KEY + 300  // 300 Paystack fee
-  ).toLocaleString("en-US") : costOfKeysText.textContent = (COST_OF_SINGLE_KEY + 300).toLocaleString("en-US")
+
+  if (currentNumberOfKeys > 0) {
+    costOfKeysText.textContent = (
+      currentNumberOfKeys * COST_OF_SINGLE_KEY +
+      300
+    ) // 300 Paystack fee
+      .toLocaleString("en-US");
+  }
 }
 
 export function getCostOfKeys(costOfKeysText) {

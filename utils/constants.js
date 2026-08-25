@@ -2,7 +2,7 @@ import { config } from "dotenv";
 config("../.env")
 export const ENVIRONMENT = process.env.ENVIRONMENT;
 export const API_KEY =
-  ENVIRONMENT == "production"
+  ENVIRONMENT == "development"
     ? process.env.TEST_SECRET_KEY
     : process.env.LIVE_SECRET_KEY;
 export const PAYMENT_URL = process.env.PAYMENT_INITIATION_URL;
