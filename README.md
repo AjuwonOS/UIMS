@@ -164,9 +164,6 @@ The style file should contain valid CSL XML and conform to the CSL specification
 
 Contributions, bug reports, and suggestions are welcome. Before submitting changes, ensure that the application runs correctly and that database, payment, access-key, and email workflows have been tested.
 
-## License
-
-Add the project's chosen license here before distributing or reusing the source code.
 
 ---
 
